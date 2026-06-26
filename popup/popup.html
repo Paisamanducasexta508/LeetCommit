@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetPush</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #1c2128;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text2: #8b949e;
+      --green: #238636;
+      --green-light: #2ea043;
+      --green-glow: rgba(35, 134, 54, 0.3);
+      --blue: #1f6feb;
+      --accent: #58a6ff;
+      --easy: #00b8a3;
+      --medium: #ffa116;
+      --hard: #ff375f;
+    }
+
+    body {
+      width: 360px;
+      min-height: 480px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--green), #00d26a);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 12px var(--green-glow);
+    }
+    .header-text h1 { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+    .header-text p { font-size: 11px; color: var(--text2); }
+    .header-badge {
+      margin-left: auto;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--green-glow);
+      color: var(--easy);
+      border: 1px solid rgba(0,184,163,0.3);
+      font-weight: 500;
+    }
+
+    /* ── Views ── */
+    .view { display: none; padding: 16px; }
+    .view.active { display: block; }
+
+    /* ── Auth View ── */
+    .auth-hero {
+      text-align: center;
+      padding: 24px 16px;
+    }
+    .auth-hero .big-logo {
+      font-size: 48px; margin-bottom: 12px;
+    }
+    .auth-hero h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .auth-hero p { color: var(--text2); font-size: 12px; line-height: 1.6; }
+
+    .divider {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--text2); font-size: 11px; margin: 16px 0;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── Forms ── */
+    .field { margin-bottom: 12px; }
+    .field label { display: block; font-size: 11px; color: var(--text2); margin-bottom: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .field input, .field select {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus, .field select:focus { border-color: var(--accent); }
+    .field input::placeholder { color: var(--text2); }
+
+    /* ── Buttons ── */
+    .btn {
+      width: 100%; padding: 9px 16px;
+      border-radius: 6px; border: none;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.2s; text-decoration: none;
+    }
+    .btn-primary { background: var(--green); color: white; }
+    .btn-primary:hover { background: var(--green-light); }
+    .btn-secondary {
+      background: var(--bg3); color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-danger { background: #da3633; color: white; }
+    .btn-danger:hover { background: #f85149; }
+    .btn + .btn { margin-top: 8px; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── GitHub OAuth big button ── */
+    .btn-github {
+      background: #238636;
+      color: white;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 8px;
+    }
+    .btn-github:hover { background: #2ea043; box-shadow: 0 0 16px var(--green-glow); }
+
+    /* ── Profile card ── */
+    .profile-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .profile-card img {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 2px solid var(--green);
+    }
+    .profile-card .user-name { font-weight: 600; font-size: 14px; }
+    .profile-card .user-sub { color: var(--text2); font-size: 11px; }
+    .profile-card .connected-badge {
+      margin-left: auto;
+      font-size: 10px; color: var(--easy);
+      background: rgba(0,184,163,0.1);
+      border: 1px solid rgba(0,184,163,0.3);
+      padding: 2px 8px; border-radius: 20px;
+    }
+
+    /* ── Stats grid ── */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 8px; margin-bottom: 16px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+    .stat-card .stat-num { font-size: 22px; font-weight: 700; line-height: 1; }
+    .stat-card .stat-label { font-size: 10px; color: var(--text2); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-easy .stat-num { color: var(--easy); }
+    .stat-medium .stat-num { color: var(--medium); }
+    .stat-hard .stat-num { color: var(--hard); }
+
+    .total-stat {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .total-stat .label { color: var(--text2); font-size: 12px; }
+    .total-stat .value { font-size: 20px; font-weight: 700; color: var(--accent); }
+
+    /* ── Repo section ── */
+    .section-title {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text2);
+      margin-bottom: 8px; margin-top: 16px;
+    }
+    .repo-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 12px;
+      margin-bottom: 12px; font-size: 12px;
+    }
+    .repo-badge .repo-name { color: var(--accent); font-weight: 500; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .repo-badge .lock { font-size: 10px; color: var(--text2); }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .tab {
+      flex: 1; padding: 8px;
+      text-align: center; font-size: 12px;
+      color: var(--text2); cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── Repo picker ── */
+    .repo-list {
+      max-height: 200px; overflow-y: auto;
+      border: 1px solid var(--border); border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .repo-item {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
+      font-size: 12px; transition: background 0.15s;
+    }
+    .repo-item:last-child { border-bottom: none; }
+    .repo-item:hover { background: var(--bg3); }
+    .repo-item.selected { background: rgba(31,111,235,0.15); }
+    .repo-item .ri-name { flex: 1; color: var(--text); }
+    .repo-item .ri-private { font-size: 10px; color: var(--text2); }
+
+    /* ── Settings ── */
+    .settings-hint {
+      background: rgba(31,111,235,0.1);
+      border: 1px solid rgba(31,111,235,0.3);
+      border-radius: 8px; padding: 10px 12px;
+      font-size: 11px; color: #79c0ff; margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    /* ── Alerts ── */
+    .alert {
+      padding: 10px 12px; border-radius: 8px;
+      font-size: 12px; margin-bottom: 12px;
+      display: none;
+    }
+    .alert.show { display: block; }
+    .alert-success { background: rgba(35,134,54,0.15); border: 1px solid rgba(35,134,54,0.4); color: #56d364; }
+    .alert-error { background: rgba(218,54,51,0.15); border: 1px solid rgba(218,54,51,0.4); color: #f85149; }
+    .alert-info { background: rgba(31,111,235,0.15); border: 1px solid rgba(31,111,235,0.4); color: #79c0ff; }
+
+    /* ── Loading ── */
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">⚡</div>
+  <div class="header-text">
+    <h1>LeetPush</h1>
+    <p>Auto GitHub sync for LeetCode</p>
+  </div>
+  <span class="header-badge" id="status-badge">●&nbsp;Setup</span>
+</div>
+
+<!-- ── View: Auth ── -->
+<div class="view active" id="view-auth">
+  <div class="auth-hero">
+    <div class="big-logo">🚀</div>
+    <h2>Connect to GitHub</h2>
+    <p>Push your LeetCode solutions automatically to GitHub when you pass all tests.</p>
+  </div>
+
+  <div class="alert" id="auth-alert"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="pat">Personal Access Token</div>
+    <div class="tab" data-tab="oauth">OAuth App</div>
+  </div>
+
+  <!-- PAT Tab -->
+  <div id="tab-pat">
+    <div class="settings-hint">
+      ℹ️ <strong>Recommended:</strong> Create a GitHub PAT with <code>repo</code> scope at <strong>Settings → Developer settings → Personal access tokens</strong>
+    </div>
+    <div class="field">
+      <label>GitHub Personal Access Token</label>
+      <input type="password" id="pat-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+    </div>
+    <button class="btn btn-github" id="btn-save-pat">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      Connect with Token
+    </button>
+    <div class="divider">or</div>
+    <div class="field">
+      <label>GitHub Username (for OAuth setup)</label>
+      <input type="text" id="username-input" placeholder="your-github-username" />
+    </div>
+  </div>
+
+  <!-- OAuth Tab -->
+  <div id="tab-oauth" style="display:none;">
+    <div class="settings-hint">
+      ℹ️ Set up a <strong>GitHub OAuth App</strong> at <strong>Settings → Developer settings → OAuth Apps</strong>. Set redirect URI to the extension's redirect URL shown below.
+    </div>
+    <div class="field">
+      <label>OAuth App Client ID</label>
+      <input type="text" id="client-id-input" placeholder="Iv1.xxxxxxxxxxxx" />
+    </div>
+    <div class="field">
+      <label>Client Secret (⚠️ stored locally)</label>
+      <input type="password" id="client-secret-input" placeholder="Optional — leave blank to use PAT instead" />
+    </div>
+    <button class="btn btn-secondary" id="btn-save-oauth-settings">Save OAuth Settings</button>
+    <button class="btn btn-github" id="btn-oauth" style="margin-top: 8px;">
+      Authorize with GitHub OAuth
+    </button>
+    <div style="margin-top: 10px; font-size: 11px; color: var(--text2);">
+      Redirect URI: <code id="redirect-uri" style="color: var(--accent); font-size: 10px; word-break: break-all;"></code>
+    </div>
+  </div>
+</div>
+
+<!-- ── View: Setup Repo ── -->
+<div class="view" id="view-setup">
+  <div class="profile-card" id="profile-display"></div>
+
+  <div class="alert" id="setup-alert"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="existing">Existing Repo</div>
+    <div class="tab" data-tab="create">Create New</div>
+  </div>
+
+  <!-- Existing -->
+  <div id="tab-existing">
+    <button class="btn btn-secondary" id="btn-load-repos" style="margin-bottom: 10px;">
+      Load My Repositories
+    </button>
+    <div class="repo-list" id="repo-list" style="display:none;"></div>
+    <button class="btn btn-primary" id="btn-use-repo" disabled>Use Selected Repo</button>
+  </div>
+
+  <!-- Create -->
+  <div id="tab-create" style="display:none;">
+    <div class="field">
+      <label>Repository Name</label>
+      <input type="text" id="new-repo-name" placeholder="leetcode-solutions" value="leetcode-solutions" />
+    </div>
+    <div class="field">
+      <label>Visibility</label>
+      <select id="new-repo-private">
+        <option value="true">🔒 Private</option>
+        <option value="false">🌍 Public</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" id="btn-create-repo">Create & Use Repo</button>
+  </div>
+</div>
+
+<!-- ── View: Dashboard ── -->
+<div class="view" id="view-dashboard">
+  <div class="profile-card" id="dash-profile"></div>
+
+  <div class="alert" id="dash-alert"></div>
+
+  <p class="section-title">📊 Progress</p>
+  <div class="total-stat">
+    <div class="label">Total Solved & Pushed</div>
+    <div class="value" id="stat-total">0</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card stat-easy"><div class="stat-num" id="stat-easy">0</div><div class="stat-label">Easy</div></div>
+    <div class="stat-card stat-medium"><div class="stat-num" id="stat-medium">0</div><div class="stat-label">Medium</div></div>
+    <div class="stat-card stat-hard"><div class="stat-num" id="stat-hard">0</div><div class="stat-label">Hard</div></div>
+  </div>
+
+  <p class="section-title">📁 Repository</p>
+  <div class="repo-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#58a6ff" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    <span class="repo-name" id="dash-repo">Not set</span>
+    <span class="lock" id="dash-repo-link"></span>
+  </div>
+
+  <button class="btn btn-secondary" id="btn-change-repo">Change Repository</button>
+  <button class="btn btn-danger" id="btn-logout" style="margin-top: 8px;">Disconnect GitHub</button>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
